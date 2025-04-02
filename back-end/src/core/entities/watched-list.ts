@@ -1,4 +1,4 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
+ 
 export abstract class WatchedList<T> {
 	public currentItems: T[];
 	private initial: T[];

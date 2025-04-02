@@ -7,6 +7,7 @@ export interface PessoaProps {
   cpfCnpj: string;
   fkUserCreate: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export class Pessoa extends Entity<PessoaProps> {
@@ -21,6 +22,9 @@ export class Pessoa extends Entity<PessoaProps> {
   }
   get createdAt() {
     return this.props.createdAt;
+  }
+  set nome(nome) {
+    this.props.nome = nome;
   }
   static create(props: Optional<PessoaProps, "createdAt">, id?: UniqueEntityID): Pessoa {
     const pessoa = new Pessoa(
