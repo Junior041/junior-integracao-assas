@@ -1,6 +1,20 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { Pessoa } from "../entities/pessoa-entity";
+import { OrderColumnParams } from "@/core/repositories/order-column-params";
 
 export abstract class PessoaRepository {
-    abstract create(data:Pessoa): Promise<Pessoa>
-    abstract findByCpfCnpj(cpfCnpj: string): Promise<Pessoa | null>
+  abstract create(data: Pessoa): Promise<Pessoa>;
+  abstract findByCpfCnpj(cpfCnpj: string): Promise<Pessoa | null>;
+  abstract getAllPessoas({
+    pagination,
+    order,
+    filtro,
+  }: {
+    pagination: PaginationParams;
+    order: OrderColumnParams;
+    filtro: {
+      nome?: string;
+      cpfCnpj?: string;
+    };
+  }): Promise<{ pessoas: Pessoa[]; pagination: PaginationParams }>;
 }

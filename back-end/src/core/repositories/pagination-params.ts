@@ -1,3 +1,5 @@
 export interface PaginationParams {
-  page: number
+  page: number;
+  perPage?: number;
+  total?: number;
 }
