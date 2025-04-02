@@ -1,4 +1,4 @@
-import { UseCaseError } from "@/core/errors/use-case-error";
+import { UseCaseError } from '@/core/errors/use-case-error';
 
 interface DadoNaoEncontradoErroParams {
   dado?: string;
@@ -12,7 +12,7 @@ export class DadoNaoEncontradoErro extends Error implements UseCaseError {
     } else if (dado) {
       super(`Dado '${dado}' não encontrado`);
     } else {
-      super("Dado não encontrado");
+      super('Dado não encontrado');
     }
   }
 }

@@ -1,4 +1,4 @@
 export interface OrderColumnParams {
   orderBy: string;
-  order: "asc" | "desc";
+  order: 'asc' | 'desc';
 }

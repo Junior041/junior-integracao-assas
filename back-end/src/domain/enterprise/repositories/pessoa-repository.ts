@@ -1,7 +1,7 @@
-import { PaginationParams } from "@/core/repositories/pagination-params";
-import { Pessoa } from "../entities/pessoa-entity";
-import { OrderColumnParams } from "@/core/repositories/order-column-params";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { PaginationParams } from '@/core/repositories/pagination-params';
+import { Pessoa } from '../entities/pessoa-entity';
+import { OrderColumnParams } from '@/core/repositories/order-column-params';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 export abstract class PessoaRepository {
   abstract create(data: Pessoa): Promise<Pessoa>;

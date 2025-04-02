@@ -1,7 +1,7 @@
-import { Either, left, right } from "@/core/either";
-import { DadoNaoEncontradoErro } from "@/core/errors/errors/dado-nao-encontrado-erro";
-import { Endereco } from "@/domain/enterprise/entities/endereco-entity";
-import { EnderecoRepository } from "@/domain/enterprise/repositories/endereco-repository";
+import { Either, left, right } from '@/core/either';
+import { DadoNaoEncontradoErro } from '@/core/errors/errors/dado-nao-encontrado-erro';
+import { Endereco } from '@/domain/enterprise/entities/endereco-entity';
+import { EnderecoRepository } from '@/domain/enterprise/repositories/endereco-repository';
 
 interface DeleteEnderecoUseCaseRequest {
   idEndereco: string;
@@ -16,14 +16,16 @@ type DeleteEnderecoUseCaseResponse = Either<
 
 export class DeleteEnderecoUseCase {
   constructor(private readonly enderecoRepository: EnderecoRepository) {}
-  async execute({ idEndereco }: DeleteEnderecoUseCaseRequest): Promise<DeleteEnderecoUseCaseResponse> {
+  async execute({
+    idEndereco,
+  }: DeleteEnderecoUseCaseRequest): Promise<DeleteEnderecoUseCaseResponse> {
     const endereco = await this.enderecoRepository.findById(idEndereco);
     if (!endereco) {
       return left(
         new DadoNaoEncontradoErro({
-          dado: "idEndereco",
+          dado: 'idEndereco',
           valor: idEndereco,
-        })
+        }),
       );
     }
 

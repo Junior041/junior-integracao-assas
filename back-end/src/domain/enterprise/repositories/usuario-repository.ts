@@ -1,4 +1,4 @@
-import { Usuario } from "../entities/usuario-entity";
+import { Usuario } from '../entities/usuario-entity';
 
 export abstract class UsuarioRepository {
   abstract findById(idUsuario: string): Promise<Usuario | null>;

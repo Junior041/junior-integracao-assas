@@ -1,8 +1,8 @@
-import { Either, left, right } from "@/core/either";
-import { UsuarioRepository } from "@/domain/enterprise/repositories/usuario-repository";
-import { CredenciaisInvalidasError } from "@/core/errors/errors/credenciais-invalidas-error";
-import { HashComparer } from "../../cryptography/hasher-comparer";
-import { Encrypter } from "../../cryptography/encrypter";
+import { Either, left, right } from '@/core/either';
+import { UsuarioRepository } from '@/domain/enterprise/repositories/usuario-repository';
+import { CredenciaisInvalidasError } from '@/core/errors/errors/credenciais-invalidas-error';
+import { HashComparer } from '../../cryptography/hasher-comparer';
+import { Encrypter } from '../../cryptography/encrypter';
 
 interface LoginUseCaseRequest {
   email: string;
@@ -17,9 +17,16 @@ type LoginUseCaseResponse = Either<
 >;
 
 export class LoginUseCase {
-  constructor(private usuarioRepository: UsuarioRepository, private hashComparer: HashComparer, private encrypter: Encrypter) {}
+  constructor(
+    private usuarioRepository: UsuarioRepository,
+    private hashComparer: HashComparer,
+    private encrypter: Encrypter,
+  ) {}
 
-  async execute({ email, senha }: LoginUseCaseRequest): Promise<LoginUseCaseResponse> {
+  async execute({
+    email,
+    senha,
+  }: LoginUseCaseRequest): Promise<LoginUseCaseResponse> {
     const usuario = await this.usuarioRepository.findByEmail(email);
     if (!usuario) {
       return left(new CredenciaisInvalidasError());
@@ -29,7 +36,9 @@ export class LoginUseCase {
       return left(new CredenciaisInvalidasError());
     }
 
-    const accessToken = await this.encrypter.encrypt({ sub: usuario.id.toString() });
+    const accessToken = await this.encrypter.encrypt({
+      sub: usuario.id.toString(),
+    });
     return right({
       accessToken,
     });

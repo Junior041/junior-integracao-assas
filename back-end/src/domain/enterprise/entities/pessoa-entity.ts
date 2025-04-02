@@ -1,14 +1,14 @@
-import { Entity } from "@/core/entities/entity";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Optional } from "@/core/types/optional";
-import { Endereco } from "./endereco-entity";
+import { Entity } from '@/core/entities/entity';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Optional } from '@/core/types/optional';
+import { Endereco } from './endereco-entity';
 
 export interface PessoaProps {
   nome: string;
   cpfCnpj: string;
   fkUserCreate: string;
   createdAt: Date;
-  enderecos?: Endereco[]
+  enderecos?: Endereco[];
 }
 
 export class Pessoa extends Entity<PessoaProps> {
@@ -30,13 +30,16 @@ export class Pessoa extends Entity<PessoaProps> {
   set nome(nome) {
     this.props.nome = nome;
   }
-  static create(props: Optional<PessoaProps, "createdAt">, id?: UniqueEntityID): Pessoa {
+  static create(
+    props: Optional<PessoaProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ): Pessoa {
     const pessoa = new Pessoa(
       {
         createdAt: props.createdAt ?? new Date(),
         ...props,
       },
-      id
+      id,
     );
     return pessoa;
   }

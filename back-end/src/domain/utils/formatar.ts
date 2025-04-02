@@ -6,7 +6,7 @@ export class Formatar {
    * @returns {string} - CPF formatado no padrão brasileiro
    */
   static cpf(cpf: string): string {
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
   /**
@@ -18,7 +18,7 @@ export class Formatar {
   static limparString(str: string): string {
     return str
       .toLowerCase()
-      .replace(/[^a-z0-9\s]/gi, "")
+      .replace(/[^a-z0-9\s]/gi, '')
       .trim();
   }
 
@@ -30,7 +30,7 @@ export class Formatar {
    * @returns {string} - Telefone formatado
    */
   static telefone(telefone: string): string {
-    return telefone.replace(/^(\d{2})(\d{4,5})(\d{4})$/, "($1) $2-$3");
+    return telefone.replace(/^(\d{2})(\d{4,5})(\d{4})$/, '($1) $2-$3');
   }
 
   /**
@@ -42,12 +42,12 @@ export class Formatar {
    */
   static slug(texto: string): string {
     return texto
-      .normalize("NFD") // Remove acentos
-      .replace(/[\u0300-\u036f]/g, "") // Remove diacríticos
-      .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove caracteres especiais
+      .normalize('NFD') // Remove acentos
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacríticos
+      .replace(/[^a-zA-Z0-9\s-]/g, '') // Remove caracteres especiais
       .trim()
       .toLowerCase()
-      .replace(/\s+/g, "-"); // Substitui espaços por "-"
+      .replace(/\s+/g, '-'); // Substitui espaços por "-"
   }
 
   /**
@@ -57,9 +57,9 @@ export class Formatar {
    * @returns {string} - Valor formatado em reais
    */
   static moeda(valor: number): string {
-    return valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     });
   }
 }

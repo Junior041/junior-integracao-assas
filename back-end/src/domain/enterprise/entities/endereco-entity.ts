@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/entity";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Optional } from "@/core/types/optional";
+import { Entity } from '@/core/entities/entity';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Optional } from '@/core/types/optional';
 
 export interface EnderecoProps {
   fkPessoa: string;
@@ -46,13 +46,16 @@ export class Endereco extends Entity<EnderecoProps> {
   get createdAt() {
     return this.props.createdAt;
   }
-  static create(props: Optional<EnderecoProps, "createdAt">, id?: UniqueEntityID): Endereco {
+  static create(
+    props: Optional<EnderecoProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ): Endereco {
     const endereco = new Endereco(
       {
         createdAt: props.createdAt ?? new Date(),
         ...props,
       },
-      id
+      id,
     );
     return endereco;
   }
