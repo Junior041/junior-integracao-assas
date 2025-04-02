@@ -1,8 +1,14 @@
 import { CreatePessoaUseCase } from '@/domain/application/cases/pessoa/create-pessoa-use-case';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipes';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { z } from 'zod';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 const createPessoaSchema = z.object({
   nome: z.string(),
@@ -15,10 +21,15 @@ const bodyValidationPipe = new ZodValidationPipe(createPessoaSchema);
 type CreatePessoaSchema = z.infer<typeof createPessoaSchema>;
 
 @Controller('/')
+@ApiTags('Pessoa')
 export class CreatePessoaController {
   constructor(private createPessoa: CreatePessoaUseCase) {}
 
   @Post()
+  @ApiCreatedResponse({ description: 'Pessoa criada com sucesso.' })
+  @ApiBadRequestResponse({ description: 'Erro de validação.' })
+  @ApiConflictResponse({ description: 'Pessoa já cadastrada.' })
+  @HttpCode(HttpStatus.CREATED)
   async handle(
     @Body(bodyValidationPipe)
     body: CreatePessoaSchema,
