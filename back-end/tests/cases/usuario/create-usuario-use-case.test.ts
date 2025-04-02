@@ -40,7 +40,7 @@ describe("CreateUsuarioUseCase", () => {
     expect(result.value).toHaveProperty("usuario");
   });
 
-  it.only("A senha do usuario deve ter sido criptografada", async () => {
+  it("A senha do usuario deve ter sido criptografada", async () => {
     const pessoaMock = makePessoa();
     vi.spyOn(usuarioRepository, "findByFkPessoa").mockResolvedValue(null);
     vi.spyOn(usuarioRepository, "findByEmail").mockResolvedValue(null);

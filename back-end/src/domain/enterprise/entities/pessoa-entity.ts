@@ -1,12 +1,14 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
+import { Endereco } from "./endereco-entity";
 
 export interface PessoaProps {
   nome: string;
   cpfCnpj: string;
   fkUserCreate: string;
   createdAt: Date;
+  enderecos?: Endereco[]
 }
 
 export class Pessoa extends Entity<PessoaProps> {
@@ -18,6 +20,9 @@ export class Pessoa extends Entity<PessoaProps> {
   }
   get fkUserCreate() {
     return this.props.fkUserCreate;
+  }
+  get enderecos() {
+    return this.props.enderecos;
   }
   get createdAt() {
     return this.props.createdAt;
