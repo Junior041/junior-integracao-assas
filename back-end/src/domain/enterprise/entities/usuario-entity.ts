@@ -3,6 +3,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 
 export interface UsuarioProps {
+  fkPessoa: string;
   email: string;
   senha: string;
   ativo: boolean;
@@ -11,6 +12,9 @@ export interface UsuarioProps {
 }
 
 export class Usuario extends Entity<UsuarioProps> {
+  get fkPessoa() {
+    return this.props.fkPessoa;
+  }
   get email() {
     return this.props.email;
   }

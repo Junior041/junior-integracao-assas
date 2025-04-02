@@ -7,7 +7,6 @@ export interface PessoaProps {
   cpfCnpj: string;
   fkUserCreate: string;
   createdAt: Date;
-  updatedAt: Date;
 }
 
 export class Pessoa extends Entity<PessoaProps> {
