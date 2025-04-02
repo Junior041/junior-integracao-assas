@@ -13,6 +13,7 @@ export function makePessoa(
       fkUserCreate: override.fkUserCreate || new UniqueEntityID().toString(),
       nome: override.nome || faker.person.fullName(),
       createdAt: override.createdAt || undefined,
+      enderecos: override.enderecos
     },
     id || new UniqueEntityID(),
   );

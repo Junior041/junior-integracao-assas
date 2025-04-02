@@ -5,7 +5,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export abstract class PessoaRepository {
   abstract create(data: Pessoa): Promise<Pessoa>;
-  abstract save(idPessoa: UniqueEntityID,data: Pessoa): Promise<Pessoa>;
+  abstract save(idPessoa: UniqueEntityID, data: Pessoa): Promise<Pessoa>;
   abstract findByCpfCnpj(cpfCnpj: string): Promise<Pessoa | null>;
   abstract findById(idPessoa: string): Promise<Pessoa | null>;
   abstract getAllPessoas({
@@ -20,4 +20,5 @@ export abstract class PessoaRepository {
       cpfCnpj?: string;
     };
   }): Promise<{ pessoas: Pessoa[]; pagination: PaginationParams }>;
+  abstract delete(idPessoa: string): Promise<void>;
 }
