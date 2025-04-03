@@ -4,10 +4,16 @@ import { CreatePessoaUseCase } from '@/domain/application/cases/pessoa/create-pe
 import { DatabaseModule } from '@/infra/database/database.module';
 import { GetPessoaController } from './controllers/get-all-pessoa.controller';
 import { GetPessoaUseCase } from '@/domain/application/cases/pessoa/get-all-pessoa-use-case';
+import { UpdatePessoaUseCase } from '@/domain/application/cases/pessoa/update-pessoa-use-case';
+import { UpdatePessoaController } from './controllers/update-pessoa.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [CreatePessoaController, GetPessoaController],
-  providers: [CreatePessoaUseCase, GetPessoaUseCase],
+  controllers: [
+    CreatePessoaController,
+    GetPessoaController,
+    UpdatePessoaController,
+  ],
+  providers: [CreatePessoaUseCase, GetPessoaUseCase, UpdatePessoaUseCase],
 })
 export class PessoaHttpModule {}

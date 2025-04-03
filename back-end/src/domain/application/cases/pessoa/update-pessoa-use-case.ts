@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/either';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { DadoNaoEncontradoErro } from '@/core/errors/errors/dado-nao-encontrado-erro';
 import { Pessoa } from '@/domain/enterprise/entities/pessoa-entity';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
+import { Injectable } from '@nestjs/common';
 
 interface UpdatePessoaUseCaseRequest {
   idPessoa: string;
@@ -10,7 +10,7 @@ interface UpdatePessoaUseCaseRequest {
 }
 
 type UpdatePessoaUseCaseResponse = Either<Error, { pessoa: Pessoa }>;
-
+@Injectable()
 export class UpdatePessoaUseCase {
   constructor(private pessoaRepository: PessoaRepository) {}
 
