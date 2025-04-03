@@ -14,7 +14,7 @@ import {
 } from '@nestjs/swagger';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 
-@Controller('/pessoa')
+@Controller()
 @ApiTags('Pessoa')
 export class DeletePessoaController {
   constructor(private deletePessoaUseCase: DeletePessoaUseCase) {}
