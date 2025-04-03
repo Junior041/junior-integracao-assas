@@ -31,7 +31,7 @@ export class CreatePessoaUseCase {
       return left(new JaCadastradroErro('Pessoa já cadastrada.'));
     }
     const pessoaSalvaNoBanco = await this.pessoaRepository.create(
-      Pessoa.create(data),
+      Pessoa.create({ ...data, cpfCnpj: Formatar.limparString(data.cpfCnpj) }),
     );
     return right({
       pessoa: pessoaSalvaNoBanco,

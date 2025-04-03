@@ -29,10 +29,7 @@ export class UpdatePessoaUseCase {
     }
     pessoa.nome = nome;
 
-    const pessoaAtualizada = await this.pessoaRepository.save(
-      new UniqueEntityID(idPessoa),
-      pessoa,
-    );
+    const pessoaAtualizada = await this.pessoaRepository.save(idPessoa, pessoa);
 
     return right({ pessoa: pessoaAtualizada });
   }

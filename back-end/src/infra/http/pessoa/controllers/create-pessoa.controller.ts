@@ -5,10 +5,12 @@ import { z } from 'zod';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { CreatePessoaDto } from '../dto/create-pessoa-dto';
 
 const createPessoaSchema = z.object({
   nome: z.string(),
@@ -26,6 +28,9 @@ export class CreatePessoaController {
   constructor(private createPessoa: CreatePessoaUseCase) {}
 
   @Post()
+  @ApiBody({
+    type: CreatePessoaDto,
+  })
   @ApiCreatedResponse({ description: 'Pessoa criada com sucesso.' })
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @ApiConflictResponse({ description: 'Pessoa já cadastrada.' })

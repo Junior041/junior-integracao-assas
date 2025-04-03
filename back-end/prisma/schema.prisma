@@ -1,0 +1,16 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Pessoa {
+  idPessoa     String   @id @default(uuid()) @map("id_pessoa")
+  nome         String   @map("nome") @db.VarChar(100)
+  cpfCnpj      String   @unique @map("cpf_cnpj") @db.VarChar(14)
+  fkUserCreate String   @map("fk_user_create")
+  createdAt    DateTime @default(now()) @map("created_at")
+}
