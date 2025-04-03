@@ -5,5 +5,5 @@ export abstract class UsuarioRepository {
   abstract findByFkPessoa(fkPessoa: string): Promise<Usuario | null>;
   abstract findByEmail(email: string): Promise<Usuario | null>;
   abstract create(data: Usuario): Promise<Usuario>;
-  abstract delete(idUsuario: string): Promise<null>;
+  abstract delete(idUsuario: string): Promise<void>;
 }

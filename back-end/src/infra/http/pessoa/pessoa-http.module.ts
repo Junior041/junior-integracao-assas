@@ -6,6 +6,8 @@ import { GetPessoaController } from './controllers/get-all-pessoa.controller';
 import { GetPessoaUseCase } from '@/domain/application/cases/pessoa/get-all-pessoa-use-case';
 import { UpdatePessoaUseCase } from '@/domain/application/cases/pessoa/update-pessoa-use-case';
 import { UpdatePessoaController } from './controllers/update-pessoa.controller';
+import { DeletePessoaController } from './controllers/delete-pessoa.controller';
+import { DeletePessoaUseCase } from '@/domain/application/cases/pessoa/delete-pessoa-use-case';
 
 @Module({
   imports: [DatabaseModule],
@@ -13,7 +15,13 @@ import { UpdatePessoaController } from './controllers/update-pessoa.controller';
     CreatePessoaController,
     GetPessoaController,
     UpdatePessoaController,
+    DeletePessoaController,
   ],
-  providers: [CreatePessoaUseCase, GetPessoaUseCase, UpdatePessoaUseCase],
+  providers: [
+    CreatePessoaUseCase,
+    GetPessoaUseCase,
+    UpdatePessoaUseCase,
+    DeletePessoaUseCase,
+  ],
 })
 export class PessoaHttpModule {}

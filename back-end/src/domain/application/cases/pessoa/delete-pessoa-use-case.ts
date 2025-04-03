@@ -3,6 +3,7 @@ import { DadoNaoEncontradoErro } from '@/core/errors/errors/dado-nao-encontrado-
 import { GenericoErro } from '@/core/errors/errors/generico-erro';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
 import { UsuarioRepository } from '@/domain/enterprise/repositories/usuario-repository';
+import { Injectable } from '@nestjs/common';
 
 interface DeletePessoaUseCaseRequest {
   idPessoa: string;
@@ -12,7 +13,7 @@ type DeletePessoaUseCaseResponse = Either<
   DadoNaoEncontradoErro | GenericoErro,
   null
 >;
-
+@Injectable()
 export class DeletePessoaUseCase {
   constructor(
     private pessoaRepository: PessoaRepository,
