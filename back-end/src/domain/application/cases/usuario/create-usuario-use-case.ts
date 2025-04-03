@@ -5,6 +5,7 @@ import { UsuarioRepository } from '@/domain/enterprise/repositories/usuario-repo
 import { HashGenerator } from '../../cryptography/hasher-generator';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
 import { DadoNaoEncontradoErro } from '@/core/errors/errors/dado-nao-encontrado-erro';
+import { Injectable } from '@nestjs/common';
 
 interface CreateUsuarioUseCaseRequest {
   fkPessoa: string;
@@ -19,7 +20,7 @@ type CreateUsuarioUseCaseResponse = Either<
     usuario: Usuario;
   }
 >;
-
+@Injectable()
 export class CreateUsuarioUseCase {
   constructor(
     private usuarioRepository: UsuarioRepository,

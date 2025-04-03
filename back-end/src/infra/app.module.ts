@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { envSchema } from './env/env';
 import { PessoaHttpModule } from './http/pessoa/pessoa-http.module';
 import { RouterModule } from '@nestjs/core';
+import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
 
 @Module({
   imports: [
@@ -17,6 +18,13 @@ import { RouterModule } from '@nestjs/core';
       {
         path: '/pessoa',
         module: PessoaHttpModule,
+      },
+    ]),
+    UsuarioHttpModule,
+    RouterModule.register([
+      {
+        path: '/usuario',
+        module: UsuarioHttpModule,
       },
     ]),
   ],
