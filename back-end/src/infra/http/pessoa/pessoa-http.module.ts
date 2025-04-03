@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { CreatePessoaController } from './controllers/create-pessoa.controller';
 import { CreatePessoaUseCase } from '@/domain/application/cases/pessoa/create-pessoa-use-case';
 import { DatabaseModule } from '@/infra/database/database.module';
+import { GetPessoaController } from './controllers/get-all-pessoa.controller';
+import { GetPessoaUseCase } from '@/domain/application/cases/pessoa/get-all-pessoa-use-case';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [CreatePessoaController],
-  providers: [CreatePessoaUseCase],
+  controllers: [CreatePessoaController, GetPessoaController],
+  providers: [CreatePessoaUseCase, GetPessoaUseCase],
 })
 export class PessoaHttpModule {}

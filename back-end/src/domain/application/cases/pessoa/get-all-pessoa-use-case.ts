@@ -3,8 +3,10 @@ import { OrderColumnParams } from '@/core/repositories/order-column-params';
 import { PaginationParams } from '@/core/repositories/pagination-params';
 import { Pessoa } from '@/domain/enterprise/entities/pessoa-entity';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
+import { Formatar } from '@/domain/utils/formatar';
+import { Injectable } from '@nestjs/common';
 
-interface GetCreatePessoaUseCaseRequest {
+interface GetPessoaUseCaseRequest {
   pagination: PaginationParams;
   order: OrderColumnParams;
   filtro: {
@@ -13,7 +15,7 @@ interface GetCreatePessoaUseCaseRequest {
   };
 }
 
-type GetCreatePessoaUseCaseResponse = Either<
+type GetPessoaUseCaseResponse = Either<
   null,
   {
     pessoas: Pessoa[];
@@ -21,16 +23,22 @@ type GetCreatePessoaUseCaseResponse = Either<
   }
 >;
 
-export class GetCreatePessoaUseCase {
+@Injectable()
+export class GetPessoaUseCase {
   constructor(private pessoaRepository: PessoaRepository) {}
 
   async execute({
     filtro,
     order,
     pagination,
-  }: GetCreatePessoaUseCaseRequest): Promise<GetCreatePessoaUseCaseResponse> {
+  }: GetPessoaUseCaseRequest): Promise<GetPessoaUseCaseResponse> {
     const result = await this.pessoaRepository.getAllPessoas({
-      filtro,
+      filtro: {
+        cpfCnpj: filtro.cpfCnpj
+          ? Formatar.limparString(filtro.cpfCnpj)
+          : undefined,
+        nome: filtro.nome,
+      },
       order,
       pagination,
     });
