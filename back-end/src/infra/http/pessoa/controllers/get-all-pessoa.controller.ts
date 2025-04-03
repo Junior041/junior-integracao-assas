@@ -9,7 +9,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params';
 import { OrderColumnParams } from '@/core/repositories/order-column-params';
 import { GetPessoaUseCase } from '@/domain/application/cases/pessoa/get-all-pessoa-use-case';
 import { ResponsePessoaDto } from '../dto/response-pessoa-dto';
-import { PessoaPResenter } from '../presenters/pessoa-presenter';
+import { PessoaPresenter } from '../presenters/pessoa-presenter';
 import {
   apiQueryOrderParam,
   apiQueryPageParam,
@@ -68,7 +68,7 @@ export class GetPessoaController {
     });
     if (result.isRight()) {
       return {
-        pessoas: result.value.pessoas.map(PessoaPResenter.toHTTP),
+        pessoas: result.value.pessoas.map(PessoaPresenter.toHTTP),
         pagination: {
           page: result.value.pagination.page,
           perPage: result.value.pagination.perPage,
