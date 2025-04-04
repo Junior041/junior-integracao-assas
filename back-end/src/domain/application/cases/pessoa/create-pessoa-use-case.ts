@@ -30,7 +30,7 @@ export class CreatePessoaUseCase {
     data: CreatePessoaUseCaseRequest,
   ): Promise<CreatePessoaUseCaseResponse> {
     if (
-      !Validations.isValidCnpj(Formatar.limparString(data.cpfCnpj)) ||
+      !Validations.isValidCnpj(Formatar.limparString(data.cpfCnpj)) &&
       !Validations.isValidCpf(Formatar.limparString(data.cpfCnpj))
     ) {
       return left(new GenericoErro('cpf/cnpj invalido'));

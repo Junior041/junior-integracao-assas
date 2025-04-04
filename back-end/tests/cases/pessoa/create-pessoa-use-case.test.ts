@@ -18,7 +18,7 @@ describe('CreatePessoaUseCase', () => {
   it('deve criar uma nova pessoa se o CPF/CNPJ não estiver cadastrado', async () => {
     const result = await sut.execute({
       nome: 'João Silva',
-      cpfCnpj: '12345678900',
+      cpfCnpj: '73.833.414/0001-75',
       fkUserCreate: 'user-123',
       dataNascimento: new Date('2002-08-15'),
       email: 'teste@gmail.com',
@@ -38,7 +38,7 @@ describe('CreatePessoaUseCase', () => {
 
     const result = await sut.execute({
       nome: 'João Silva',
-      cpfCnpj: '000-000-000-55',
+      cpfCnpj: '73.833.414/0001-75',
       fkUserCreate: 'user-123',
       dataNascimento: new Date('2002-08-15'),
       email: 'teste@gmail.com',
