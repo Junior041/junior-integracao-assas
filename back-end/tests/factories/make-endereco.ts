@@ -1,14 +1,22 @@
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 
-import { Endereco, EnderecoProps } from "@/domain/enterprise/entities/endereco-entity";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { makePessoa } from "./make-pessoa";
+import {
+  Endereco,
+  EnderecoProps,
+} from '@/domain/enterprise/entities/endereco-entity';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { makePessoa } from './make-pessoa';
 
 export function makeEndereco(
   override: Partial<EnderecoProps> = {},
   id?: UniqueEntityID,
 ): Endereco {
-  const pessoa = makePessoa({}, override.fkPessoa ? new UniqueEntityID(override.fkPessoa) : new UniqueEntityID());
+  const pessoa = makePessoa(
+    {},
+    override.fkPessoa
+      ? new UniqueEntityID(override.fkPessoa)
+      : new UniqueEntityID(),
+  );
 
   const endereco = Endereco.create(
     {
@@ -21,6 +29,7 @@ export function makeEndereco(
       rua: override.rua || faker.location.streetAddress(),
       complemento: override.complemento || faker.lorem.words(2),
       createdAt: override.createdAt || new Date(),
+      numero: faker.number.int().toString(),
     },
     id || new UniqueEntityID(),
   );

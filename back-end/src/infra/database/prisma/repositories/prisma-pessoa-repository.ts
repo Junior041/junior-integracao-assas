@@ -13,6 +13,42 @@ export class PrismaPessoaRepository implements PessoaRepository {
     private prisma: PrismaService,
     private envService: EnvService,
   ) {}
+  async verifyByUnique({
+    cpfCnpj,
+    telefone,
+    email,
+  }: {
+    cpfCnpj: string;
+    telefone: string;
+    email: string;
+  }): Promise<Pessoa | null> {
+    const result = await this.prisma.pessoa.findFirst({
+      where: {
+        OR: [{ cpfCnpj }, { telefone }, { email }],
+      },
+    });
+
+    if (!result) {
+      return null;
+    }
+
+    return PrismaPessoaMapper.toDomain(result);
+  }
+
+  async findByIdWithEndereco(idPessoa: string): Promise<Pessoa | null> {
+    const result = await this.prisma.pessoa.findUnique({
+      where: {
+        idPessoa,
+      },
+      include: {
+        Endereco: true,
+      },
+    });
+    if (!result) {
+      return null;
+    }
+    return PrismaPessoaMapper.toDomain(result);
+  }
   async create(data: Pessoa): Promise<Pessoa> {
     const result = await this.prisma.pessoa.create({
       data: PrismaPessoaMapper.toPersistence(data),

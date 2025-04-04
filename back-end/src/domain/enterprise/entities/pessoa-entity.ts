@@ -9,6 +9,11 @@ export interface PessoaProps {
   fkUserCreate: string;
   createdAt: Date;
   enderecos?: Endereco[];
+
+  //parte da assas
+  telefone: string;
+  email: string;
+  dataNascimento: Date;
 }
 
 export class Pessoa extends Entity<PessoaProps> {
@@ -29,6 +34,17 @@ export class Pessoa extends Entity<PessoaProps> {
   }
   set nome(nome) {
     this.props.nome = nome;
+  }
+
+  // parte que precisa no assas
+  get telefone() {
+    return this.props.telefone;
+  }
+  get email() {
+    return this.props.email;
+  }
+  get dataNascimento() {
+    return this.props.dataNascimento;
   }
   static create(
     props: Optional<PessoaProps, 'createdAt'>,

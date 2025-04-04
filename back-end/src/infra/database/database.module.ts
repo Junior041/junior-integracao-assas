@@ -5,6 +5,8 @@ import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-reposi
 import { PrismaPessoaRepository } from './prisma/repositories/prisma-pessoa-repository';
 import { UsuarioRepository } from '@/domain/enterprise/repositories/usuario-repository';
 import { PrismaUsuarioRepository } from './prisma/repositories/prisma-usuario-repository';
+import { BankAccountRepository } from '@/domain/enterprise/repositories/bank-account-repository';
+import { PrismaBankAccountRepository } from './prisma/repositories/prisma-bank-account-repository';
 
 @Module({
   imports: [EnvModule],
@@ -19,7 +21,11 @@ import { PrismaUsuarioRepository } from './prisma/repositories/prisma-usuario-re
       provide: UsuarioRepository,
       useClass: PrismaUsuarioRepository,
     },
+    {
+      provide: BankAccountRepository,
+      useClass: PrismaBankAccountRepository,
+    },
   ],
-  exports: [PessoaRepository, UsuarioRepository],
+  exports: [PessoaRepository, UsuarioRepository, BankAccountRepository],
 })
 export class DatabaseModule {}

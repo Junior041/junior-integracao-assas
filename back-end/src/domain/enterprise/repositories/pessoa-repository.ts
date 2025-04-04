@@ -7,6 +7,16 @@ export abstract class PessoaRepository {
   abstract save(idPessoa: string, data: Pessoa): Promise<Pessoa>;
   abstract findByCpfCnpj(cpfCnpj: string): Promise<Pessoa | null>;
   abstract findById(idPessoa: string): Promise<Pessoa | null>;
+  abstract verifyByUnique({
+    cpfCnpj,
+    telefone,
+    email,
+  }: {
+    cpfCnpj: string;
+    telefone: string;
+    email: string;
+  }): Promise<Pessoa | null>;
+  abstract findByIdWithEndereco(idPessoa: string): Promise<Pessoa | null>;
   abstract getAllPessoas({
     pagination,
     order,

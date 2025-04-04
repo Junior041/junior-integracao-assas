@@ -1,12 +1,30 @@
 export class Formatar {
   /**
-   * Formata um CPF adicionando os pontos e o traço no formato XXX.XXX.XXX-XX.
+   * Formata uma string como CPF ou CNPJ automaticamente.
+   * - CPF: XXX.XXX.XXX-XX
+   * - CNPJ: XX.XXX.XXX/0001-XX
    *
-   * @param {string} cpf - CPF contendo apenas números (11 dígitos)
-   * @returns {string} - CPF formatado no padrão brasileiro
+   * @param {string} valor - CPF (11 dígitos) ou CNPJ (14 dígitos)
+   * @returns {string} - Valor formatado
    */
-  static cpf(cpf: string): string {
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  static cpfOuCnpj(valor: string): string {
+    const apenasNumeros = valor.replace(/\D/g, '');
+
+    if (apenasNumeros.length === 11) {
+      // CPF
+      return apenasNumeros.replace(
+        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+        '$1.$2.$3-$4',
+      );
+    } else if (apenasNumeros.length === 14) {
+      // CNPJ
+      return apenasNumeros.replace(
+        /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+        '$1.$2.$3/$4-$5',
+      );
+    }
+
+    return valor; // Retorna sem formatação se não tiver 11 ou 14 dígitos
   }
 
   /**
@@ -61,5 +79,14 @@ export class Formatar {
       style: 'currency',
       currency: 'BRL',
     });
+  }
+  /**
+   * Remove todos os caracteres que não são dígitos da string.
+   *
+   * @param {string} valor - Texto contendo números e caracteres diversos
+   * @returns {string} - Apenas os números da string original
+   */
+  static apenasNumeros(valor: string): string {
+    return valor.replace(/\D/g, '');
   }
 }

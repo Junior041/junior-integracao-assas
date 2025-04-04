@@ -9,7 +9,7 @@ interface CreateEnderecoUseCaseRequest {
   fkPessoa: string;
   cep: string;
   rua: string;
-  numero?: string;
+  numero: string;
   complemento?: string;
   bairro: string;
   cidade: string;

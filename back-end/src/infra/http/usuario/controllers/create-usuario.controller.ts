@@ -40,7 +40,5 @@ export class CreateUsuarioController {
     if (result.isLeft()) {
       ExceptionsHandle.handle(result.value);
     }
-
-    return result.value;
   }
 }

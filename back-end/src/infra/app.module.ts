@@ -5,6 +5,7 @@ import { envSchema } from './env/env';
 import { PessoaHttpModule } from './http/pessoa/pessoa-http.module';
 import { RouterModule } from '@nestjs/core';
 import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
+import { BankAccountHttpModule } from './http/bank-account/bank-account-http.module';
 
 @Module({
   imports: [
@@ -25,6 +26,13 @@ import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
       {
         path: '/usuario',
         module: UsuarioHttpModule,
+      },
+    ]),
+    BankAccountHttpModule,
+    RouterModule.register([
+      {
+        path: '/bank-acocunt',
+        module: BankAccountHttpModule,
       },
     ]),
   ],

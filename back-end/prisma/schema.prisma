@@ -8,12 +8,17 @@ generator client {
 }
 
 model Pessoa {
-  idPessoa     String   @id @default(uuid()) @map("id_pessoa")
-  nome         String   @map("nome") @db.VarChar(100)
-  cpfCnpj      String   @unique @map("cpf_cnpj") @db.VarChar(14)
-  fkUserCreate String   @map("fk_user_create")
-  createdAt    DateTime @default(now()) @map("created_at")
-  Usuario      Usuario?
+  idPessoa       String        @id @default(uuid()) @map("id_pessoa")
+  nome           String        @map("nome") @db.VarChar(100)
+  cpfCnpj        String        @unique @map("cpf_cnpj") @db.VarChar(14)
+  fkUserCreate   String        @map("fk_user_create")
+  telefone       String        @unique @map("telefone")
+  email          String        @unique @map("email")
+  dataNascimento DateTime      @map("data_nascimento")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  Usuario        Usuario?
+  Endereco       Endereco[]
+  BankAccount    BankAccount[]
 }
 
 model Usuario {
@@ -25,5 +30,39 @@ model Usuario {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  pessoa Pessoa @relation(fields: [fkPessoa], references: [idPessoa])
+  Pessoa Pessoa @relation(fields: [fkPessoa], references: [idPessoa])
+}
+
+model Endereco {
+  idEndereco  String   @id @default(uuid()) @map("id_endereco")
+  fkPessoa    String   @map("fk_pessoa")
+  cep         String   @map("cep") @db.VarChar(9)
+  rua         String   @map("rua") @db.VarChar(255)
+  numero      String   @map("numero") @db.VarChar(20)
+  complemento String?  @map("complemento") @db.VarChar(255)
+  bairro      String   @map("bairro") @db.VarChar(100)
+  cidade      String   @map("cidade") @db.VarChar(100)
+  estado      String   @map("estado") @db.VarChar(2)
+  pais        String   @map("pais") @db.VarChar(100)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  Pessoa Pessoa @relation(fields: [fkPessoa], references: [idPessoa])
+
+  @@map("enderecos")
+}
+
+model BankAccount {
+  idBankAccount String   @id @default(uuid())
+  idAccount     String
+  bank          String
+  fkPessoa      String
+  incomeValue   Float
+  agency        String
+  account       String
+  accountDigit  String
+  createdAt     DateTime @default(now())
+  fkUserCreate  String
+
+  // Relacionamentos (caso tenha os modelos Pessoa e User)
+  Pessoa Pessoa @relation(fields: [fkPessoa], references: [idPessoa])
 }
