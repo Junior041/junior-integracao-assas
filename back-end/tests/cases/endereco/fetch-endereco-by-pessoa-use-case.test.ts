@@ -24,8 +24,6 @@ describe('FetchEnderecoByPessoaUseCase', () => {
     const result = await sut.execute({
       fkPessoa: ' 83f0ebc8-c6f7-4294-b8ae-fbe630f91983 ',
     });
-    console.log(result);
-
     expect(result.isRight()).toBe(true);
 
     expect(result.value).toHaveProperty('enderecos');
