@@ -4,4 +4,5 @@ export abstract class BankAccountRepository {
   abstract create(data: BankAccount): Promise<BankAccount>;
   abstract findById(idBankAccount: string): Promise<BankAccount | null>;
   abstract findByFkPessoa(fkPessoa: string): Promise<BankAccount[]>;
+  abstract getAll(): Promise<BankAccount[]>;
 }
