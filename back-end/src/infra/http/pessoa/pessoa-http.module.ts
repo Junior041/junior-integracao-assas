@@ -8,9 +8,10 @@ import { UpdatePessoaUseCase } from '@/domain/application/cases/pessoa/update-pe
 import { UpdatePessoaController } from './controllers/update-pessoa.controller';
 import { DeletePessoaController } from './controllers/delete-pessoa.controller';
 import { DeletePessoaUseCase } from '@/domain/application/cases/pessoa/delete-pessoa-use-case';
+import { MailModule } from '@/infra/mail/mail.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, MailModule],
   controllers: [
     CreatePessoaController,
     GetPessoaController,

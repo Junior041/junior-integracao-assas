@@ -11,6 +11,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreatePessoaDto } from '../dto/create-pessoa-dto';
+import { EnvService } from '@/infra/env/env.service';
 
 const createPessoaSchema = z.object({
   nome: z.string(),
@@ -28,7 +29,10 @@ type CreatePessoaSchema = z.infer<typeof createPessoaSchema>;
 @Controller('/')
 @ApiTags('Pessoa')
 export class CreatePessoaController {
-  constructor(private createPessoa: CreatePessoaUseCase) {}
+  constructor(
+    private createPessoa: CreatePessoaUseCase,
+    private env: EnvService,
+  ) {}
 
   @Post()
   @ApiBody({
@@ -42,7 +46,12 @@ export class CreatePessoaController {
     @Body(bodyValidationPipe)
     body: CreatePessoaSchema,
   ) {
-    const result = await this.createPessoa.execute(body);
+    const result = await this.createPessoa.execute({
+      ...body,
+      tempoEmMinutosParaEnvioDoEmail: this.env.get(
+        'TEMPO_EM_MINUTOS_PARA_ENVIO_DE_EMAIL',
+      ),
+    });
 
     if (result.isLeft()) {
       ExceptionsHandle.handle(result.value);

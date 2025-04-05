@@ -5,7 +5,9 @@ import { Pessoa } from '@/domain/enterprise/entities/pessoa-entity';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
 import { Formatar } from '@/domain/utils/formatar';
 import { Validations } from '@/domain/utils/validations';
+import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
+import { Queue } from 'bull';
 
 interface CreatePessoaUseCaseRequest {
   nome: string;
@@ -13,6 +15,7 @@ interface CreatePessoaUseCaseRequest {
   telefone: string;
   email: string;
   dataNascimento: Date;
+  tempoEmMinutosParaEnvioDoEmail: number;
   fkUserCreate: string;
 }
 
@@ -24,7 +27,10 @@ type CreatePessoaUseCaseResponse = Either<
 >;
 @Injectable()
 export class CreatePessoaUseCase {
-  constructor(private pessoaRepository: PessoaRepository) {}
+  constructor(
+    private pessoaRepository: PessoaRepository,
+    @InjectQueue('email') private emailQueue: Queue,
+  ) {}
 
   async execute(
     data: CreatePessoaUseCaseRequest,
@@ -51,6 +57,18 @@ export class CreatePessoaUseCase {
         telefone: Formatar.apenasNumeros(data.telefone),
       }),
     );
+    await this.emailQueue.add(
+      'email',
+      {
+        to: [data.email],
+        subject: 'Bem-vindo ao Imobia!',
+        body: `<h1>Olá, ${data.nome}!</h1><p>Seja bem-vindo ao Imobia 🚀</p>`,
+      },
+      {
+        delay: data.tempoEmMinutosParaEnvioDoEmail * 60 * 1000,
+      },
+    );
+
     return right({
       pessoa: pessoaSalvaNoBanco,
     });

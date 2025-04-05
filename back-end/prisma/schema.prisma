@@ -63,6 +63,5 @@ model BankAccount {
   createdAt     DateTime @default(now())
   fkUserCreate  String
 
-  // Relacionamentos (caso tenha os modelos Pessoa e User)
   Pessoa Pessoa @relation(fields: [fkPessoa], references: [idPessoa])
 }

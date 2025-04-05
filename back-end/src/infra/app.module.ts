@@ -6,12 +6,18 @@ import { PessoaHttpModule } from './http/pessoa/pessoa-http.module';
 import { RouterModule } from '@nestjs/core';
 import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
 import { BankAccountHttpModule } from './http/bank-account/bank-account-http.module';
-
+import { BullModule } from '@nestjs/bull';
 @Module({
   imports: [
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
+    }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
     }),
     EnvModule,
     PessoaHttpModule,
