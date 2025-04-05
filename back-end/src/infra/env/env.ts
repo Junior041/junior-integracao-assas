@@ -11,6 +11,8 @@ export const envSchema = z.object({
   TOKEN_ASSAS: z.string(),
   EMAIL_USER: z.string(),
   EMAIL_PASS: z.string(),
+  JWT_SECRET_KEY: z.string(),
+  JWT_PUBLIC_KEY: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

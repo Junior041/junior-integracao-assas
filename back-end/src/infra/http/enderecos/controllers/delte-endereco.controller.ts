@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipes';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiParam,
@@ -42,6 +43,7 @@ export class DeleteEnderecoController {
   @ApiBadRequestResponse({ description: 'Erro de validação nos parâmetros.' })
   @ApiNotFoundResponse({ description: 'Endereço não encontrado.' })
   @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
   async handle(
     @Param(paramValidationPipe)
     params: DeleteEnderecoParams,

@@ -7,12 +7,14 @@ import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
 import { BankAccountHttpModule } from './http/bank-account/bank-account-http.module';
 import { BullModule } from '@nestjs/bull';
 import { EnderecoHttpModule } from './http/enderecos/endereco-http.modulo';
+import { AuthModule } from './http/auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
+    AuthModule,
     BullModule.forRoot({
       redis: {
         host: 'localhost',

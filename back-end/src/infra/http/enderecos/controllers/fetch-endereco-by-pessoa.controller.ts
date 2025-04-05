@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipes';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiOkResponse,
   ApiQuery,
   ApiTags,
@@ -34,6 +35,7 @@ export class FetchEnderecoByPessoaController {
   })
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
   async handle(
     @Query(queryValidationPipe)
     query: FetchEnderecoQuery,

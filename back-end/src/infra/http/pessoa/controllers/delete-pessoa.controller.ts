@@ -11,6 +11,7 @@ import {
   ApiNotFoundResponse,
   ApiNoContentResponse,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 
@@ -24,6 +25,7 @@ export class DeletePessoaController {
   @ApiNotFoundResponse({ description: 'Pessoa não encontrada.' })
   @ApiBadRequestResponse({ description: 'Erro de validação ou exclusão.' })
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
   async handle(@Param('idPessoa') idPessoa: string) {
     const result = await this.deletePessoaUseCase.execute({ idPessoa });
 

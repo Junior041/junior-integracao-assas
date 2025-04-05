@@ -10,6 +10,7 @@ import {
   ApiCreatedResponse,
   ApiTags,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateBankAccountDto } from '../dto/create-bank-account-dto';
 
@@ -35,6 +36,7 @@ export class CreateBankAccountController {
   @ApiNotFoundResponse({ description: 'Pessoa não encontrada.' })
   @ApiConflictResponse({ description: 'Conta bancária já cadastrada.' })
   @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth()
   async handle(@Body(bodyValidationPipe) body: CreateBankAccountSchema) {
     const result = await this.createBankAccount.execute(body);
 

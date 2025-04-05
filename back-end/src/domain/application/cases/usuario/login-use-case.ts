@@ -3,6 +3,7 @@ import { UsuarioRepository } from '@/domain/enterprise/repositories/usuario-repo
 import { CredenciaisInvalidasError } from '@/core/errors/errors/credenciais-invalidas-error';
 import { HashComparer } from '../../cryptography/hasher-comparer';
 import { Encrypter } from '../../cryptography/encrypter';
+import { Injectable } from '@nestjs/common';
 
 interface LoginUseCaseRequest {
   email: string;
@@ -15,7 +16,7 @@ type LoginUseCaseResponse = Either<
     accessToken: string;
   }
 >;
-
+@Injectable()
 export class LoginUseCase {
   constructor(
     private usuarioRepository: UsuarioRepository,
@@ -35,6 +36,7 @@ export class LoginUseCase {
     if (!senhaValida) {
       return left(new CredenciaisInvalidasError());
     }
+    console.log(senhaValida);
 
     const accessToken = await this.encrypter.encrypt({
       sub: usuario.id.toString(),

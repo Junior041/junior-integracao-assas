@@ -7,7 +7,7 @@ export class PessoaPresenter {
       idPessoa: pessoa.id.toString(),
       nome: pessoa.nome,
       cpfCnpj: Formatar.cpfOuCnpj(pessoa.cpfCnpj),
-      fkUserCreate: pessoa.fkUserCreate,
+      fkUserCreate: pessoa.fkUserCreate || undefined,
       telefone: Formatar.telefone(pessoa.telefone),
       email: pessoa.email,
       dataNascimento: pessoa.dataNascimento,

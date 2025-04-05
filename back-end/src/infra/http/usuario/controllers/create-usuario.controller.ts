@@ -5,12 +5,14 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiConflictResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateUsuarioUseCase } from '@/domain/application/cases/usuario/create-usuario-use-case';
 import { CreateUsuarioDto } from '../dto/create-usuario-dto';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipes';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 import { z } from 'zod';
+import { Public } from '../../auth/public';
 
 const createUsuarioSchema = z.object({
   fkPessoa: z.string().uuid(),
@@ -33,6 +35,7 @@ export class CreateUsuarioController {
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @ApiConflictResponse({ description: 'Usuário já cadastrado.' })
   @HttpCode(HttpStatus.CREATED)
+  @Public()
   async handle(@Body(bodyValidationPipe) body: CreateUsuarioSchema) {
     const result = await this.createUsuario.create(body);
 

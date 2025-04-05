@@ -18,6 +18,13 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Junior Integração Assas')
     .setVersion('1.0')
+    .addBearerAuth({
+      scheme: 'bearer',
+      type: 'apiKey',
+      name: 'Authorization',
+      in: 'header',
+      bearerFormat: 'JWT',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

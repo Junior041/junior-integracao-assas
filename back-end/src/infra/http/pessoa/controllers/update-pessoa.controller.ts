@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -37,6 +38,7 @@ export class UpdatePessoaController {
   @ApiNotFoundResponse({ description: 'Pessoa não encontrada.' })
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
   async handle(
     @Param('idPessoa') idPessoa: string,
     @Body(bodyValidationPipe)

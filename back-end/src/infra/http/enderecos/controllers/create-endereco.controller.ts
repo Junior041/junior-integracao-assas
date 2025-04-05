@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -41,6 +42,7 @@ export class CreateEnderecoController {
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @ApiNotFoundResponse({ description: 'Pessoa não encontrada.' })
   @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth()
   async handle(
     @Body(bodyValidationPipe)
     body: CreateEnderecoSchema,

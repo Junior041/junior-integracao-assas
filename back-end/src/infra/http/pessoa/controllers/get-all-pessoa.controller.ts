@@ -4,6 +4,7 @@ import {
   ApiQuery,
   ApiOkResponse,
   ApiBadRequestResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PaginationParams } from '@/core/repositories/pagination-params';
 import { OrderColumnParams } from '@/core/repositories/order-column-params';
@@ -38,6 +39,7 @@ export class GetPessoaController {
   @ApiQuery(apiQueryOrderParam)
   @ApiQuery(apiQueryPageParam)
   @ApiQuery(apiQueryPerPageParam)
+  @ApiBearerAuth()
   async handle(
     @Query('page', pageValidationPipe) page: number,
     @Query('perPage', perPageValidationPipe) perPage: number,

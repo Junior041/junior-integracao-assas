@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { ExceptionsHandle } from '../../pipes/exceptions-handle';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -42,6 +43,7 @@ export class CreatePessoaController {
   @ApiBadRequestResponse({ description: 'Erro de validação.' })
   @ApiConflictResponse({ description: 'Pessoa já cadastrada.' })
   @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth()
   async handle(
     @Body(bodyValidationPipe)
     body: CreatePessoaSchema,
