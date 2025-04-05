@@ -31,7 +31,6 @@ describe('CreatePessoaUseCase', () => {
     const result = await sut.execute({
       nome: 'João Silva',
       cpfCnpj: '73.833.414/0001-75',
-      fkUserCreate: 'user-123',
       dataNascimento: new Date('2002-08-15'),
       email: 'teste@gmail.com',
       telefone: '(47) 99999-9999',
@@ -61,7 +60,6 @@ describe('CreatePessoaUseCase', () => {
     const result = await sut.execute({
       nome: 'João Silva',
       cpfCnpj: '73.833.414/0001-75',
-      fkUserCreate: 'user-123',
       dataNascimento: new Date('2002-08-15'),
       email: 'teste@gmail.com',
       telefone: '(47) 99999-9999',

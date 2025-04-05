@@ -13,7 +13,6 @@ export function makePessoa(
   const pessoa = Pessoa.create(
     {
       cpfCnpj: override.cpfCnpj || '33.364.217/0001-30',
-      fkUserCreate: override.fkUserCreate || new UniqueEntityID().toString(),
       nome: override.nome || faker.person.fullName(),
       createdAt: override.createdAt || undefined,
       dataNascimento: override.dataNascimento || faker.date.birthdate(),

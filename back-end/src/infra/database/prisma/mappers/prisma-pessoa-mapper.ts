@@ -13,7 +13,6 @@ export class PrismaPessoaMapper {
     return PessoaDomain.create(
       {
         cpfCnpj: raw.cpfCnpj,
-        fkUserCreate: raw.fkUserCreate,
         nome: raw.nome,
         createdAt: raw.createdAt ? new Date(raw.createdAt) : undefined,
         dataNascimento: new Date(raw.dataNascimento),
@@ -32,7 +31,6 @@ export class PrismaPessoaMapper {
   ): Prisma.PessoaUncheckedCreateInput {
     return {
       cpfCnpj: pessoa.cpfCnpj,
-      fkUserCreate: pessoa.fkUserCreate,
       nome: pessoa.nome,
       createdAt: pessoa.createdAt,
       dataNascimento: pessoa.dataNascimento,

@@ -17,7 +17,6 @@ import { EnvService } from '@/infra/env/env.service';
 const createPessoaSchema = z.object({
   nome: z.string(),
   cpfCnpj: z.string(),
-  fkUserCreate: z.string().uuid(),
   telefone: z.string(),
   email: z.string(),
   dataNascimento: z.coerce.date(),

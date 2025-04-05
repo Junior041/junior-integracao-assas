@@ -11,7 +11,6 @@ model Pessoa {
   idPessoa       String        @id @default(uuid()) @map("id_pessoa")
   nome           String        @map("nome") @db.VarChar(100)
   cpfCnpj        String        @unique @map("cpf_cnpj") @db.VarChar(14)
-  fkUserCreate   String        @map("fk_user_create")
   telefone       String        @unique @map("telefone")
   email          String        @unique @map("email")
   dataNascimento DateTime      @map("data_nascimento")

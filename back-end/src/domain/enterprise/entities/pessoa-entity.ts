@@ -6,7 +6,6 @@ import { Endereco } from './endereco-entity';
 export interface PessoaProps {
   nome: string;
   cpfCnpj: string;
-  fkUserCreate: string;
   createdAt: Date;
   enderecos?: Endereco[];
 
@@ -22,9 +21,6 @@ export class Pessoa extends Entity<PessoaProps> {
   }
   get cpfCnpj() {
     return this.props.cpfCnpj;
-  }
-  get fkUserCreate() {
-    return this.props.fkUserCreate;
   }
   get enderecos() {
     return this.props.enderecos;

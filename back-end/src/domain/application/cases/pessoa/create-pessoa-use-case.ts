@@ -16,7 +16,6 @@ interface CreatePessoaUseCaseRequest {
   email: string;
   dataNascimento: Date;
   tempoEmMinutosParaEnvioDoEmail: number;
-  fkUserCreate: string;
 }
 
 type CreatePessoaUseCaseResponse = Either<
