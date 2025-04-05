@@ -7,12 +7,6 @@ export class CreateUsuarioDto {
   })
   fkPessoa: string;
 
-  @ApiProperty({
-    example: 'usuario@email.com',
-    description: 'E-mail do usuário.',
-  })
-  email: string;
-
   @ApiProperty({ example: '123456', description: 'Senha do usuário.' })
   senha: string;
 

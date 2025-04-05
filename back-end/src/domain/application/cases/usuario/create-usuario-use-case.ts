@@ -9,7 +9,6 @@ import { Injectable } from '@nestjs/common';
 
 interface CreateUsuarioUseCaseRequest {
   fkPessoa: string;
-  email: string;
   senha: string;
   ativo: boolean;
 }
@@ -30,16 +29,11 @@ export class CreateUsuarioUseCase {
 
   async create({
     ativo,
-    email,
     fkPessoa,
     senha,
   }: CreateUsuarioUseCaseRequest): Promise<CreateUsuarioUseCaseResponse> {
     let usuarioJaCadastrado =
       await this.usuarioRepository.findByFkPessoa(fkPessoa);
-    if (usuarioJaCadastrado) {
-      return left(new JaCadastradroErro());
-    }
-    usuarioJaCadastrado = await this.usuarioRepository.findByEmail(email);
     if (usuarioJaCadastrado) {
       return left(new JaCadastradroErro());
     }
@@ -53,11 +47,17 @@ export class CreateUsuarioUseCase {
         }),
       );
     }
+    usuarioJaCadastrado = await this.usuarioRepository.findByEmail(
+      pessoa.email,
+    );
+    if (usuarioJaCadastrado) {
+      return left(new JaCadastradroErro());
+    }
 
     const senha_hash = await this.hashGenerator.hash(senha);
     const usuario = Usuario.create({
       ativo,
-      email,
+      email: pessoa.email,
       fkPessoa,
       senha: senha_hash,
     });
