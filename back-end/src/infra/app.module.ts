@@ -8,6 +8,7 @@ import { BankAccountHttpModule } from './http/bank-account/bank-account-http.mod
 import { BullModule } from '@nestjs/bull';
 import { EnderecoHttpModule } from './http/enderecos/endereco-http.modulo';
 import { AuthModule } from './http/auth/auth.module';
+import { GraficosHttpModule } from './http/graficos/graficos-httm.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -47,6 +48,13 @@ import { AuthModule } from './http/auth/auth.module';
       {
         path: '/endereco',
         module: EnderecoHttpModule,
+      },
+    ]),
+    GraficosHttpModule,
+    RouterModule.register([
+      {
+        path: '/graficos',
+        module: GraficosHttpModule,
       },
     ]),
   ],

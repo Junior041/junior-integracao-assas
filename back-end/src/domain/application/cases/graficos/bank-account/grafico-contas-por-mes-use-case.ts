@@ -1,17 +1,21 @@
 import { BankAccountRepository } from '@/domain/enterprise/repositories/bank-account-repository';
 import { Either, right } from '@/core/either';
+import { Injectable } from '@nestjs/common';
 
 interface GraficoContasPorMesUseCase {
   mes: string; // Ex: "2025-04"
   total: number;
 }
 
-type Response = Either<null, GraficoContasPorMesUseCase[]>;
-
+type GraficoGraficoContasPorMesUseCaseResponse = Either<
+  null,
+  GraficoContasPorMesUseCase[]
+>;
+@Injectable()
 export class GraficoGraficoContasPorMesUseCase {
   constructor(private readonly bankAccountRepository: BankAccountRepository) {}
 
-  async execute(): Promise<Response> {
+  async execute(): Promise<GraficoGraficoContasPorMesUseCaseResponse> {
     const contas = await this.bankAccountRepository.getAll();
 
     const agrupado: Record<string, number> = {};

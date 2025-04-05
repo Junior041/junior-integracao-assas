@@ -11,6 +11,10 @@ export class PrismaBankAccountRepository implements BankAccountRepository {
     private prisma: PrismaService,
     private envService: EnvService,
   ) {}
+  async getAll(): Promise<BankAccount[]> {
+    const result = await this.prisma.bankAccount.findMany();
+    return result.map(PrismaBankAccountMapper.toDomain);
+  }
   async create(data: BankAccount): Promise<BankAccount> {
     const result = await this.prisma.bankAccount.create({
       data: PrismaBankAccountMapper.toPersistence(data),

@@ -1,5 +1,6 @@
 import { Either, right } from '@/core/either';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
+import { Injectable } from '@nestjs/common';
 
 interface GraficoPessoasPorIdadeUseCaseRequest {}
 
@@ -9,7 +10,7 @@ interface FaixaEtaria {
 }
 
 type GraficoPessoasPorIdadeUseCaseResponse = Either<null, FaixaEtaria[]>;
-
+@Injectable()
 export class GraficoPessoasPorIdadeUseCase {
   constructor(private readonly pessoaRepository: PessoaRepository) {}
 
