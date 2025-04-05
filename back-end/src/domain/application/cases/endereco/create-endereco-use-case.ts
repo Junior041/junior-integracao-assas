@@ -4,6 +4,7 @@ import { Endereco } from '@/domain/enterprise/entities/endereco-entity';
 import { EnderecoRepository } from '@/domain/enterprise/repositories/endereco-repository';
 import { PessoaRepository } from '@/domain/enterprise/repositories/pessoa-repository';
 import { Formatar } from '@/domain/utils/formatar';
+import { Injectable } from '@nestjs/common';
 
 interface CreateEnderecoUseCaseRequest {
   fkPessoa: string;
@@ -24,6 +25,7 @@ type CreateEnderecoUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class CreateEnderecoUseCase {
   constructor(
     private readonly enderecoRepository: EnderecoRepository,

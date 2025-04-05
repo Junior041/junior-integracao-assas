@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { EnvModule } from './env/env.module';
 import { ConfigModule } from '@nestjs/config';
 import { envSchema } from './env/env';
 import { PessoaHttpModule } from './http/pessoa/pessoa-http.module';
@@ -7,6 +6,7 @@ import { RouterModule } from '@nestjs/core';
 import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
 import { BankAccountHttpModule } from './http/bank-account/bank-account-http.module';
 import { BullModule } from '@nestjs/bull';
+import { EnderecoHttpModule } from './http/enderecos/endereco-http.modulo';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,7 +19,6 @@ import { BullModule } from '@nestjs/bull';
         port: 6379,
       },
     }),
-    EnvModule,
     PessoaHttpModule,
     RouterModule.register([
       {
@@ -39,6 +38,13 @@ import { BullModule } from '@nestjs/bull';
       {
         path: '/bank-acocunt',
         module: BankAccountHttpModule,
+      },
+    ]),
+    EnderecoHttpModule,
+    RouterModule.register([
+      {
+        path: '/endereco',
+        module: EnderecoHttpModule,
       },
     ]),
   ],

@@ -17,7 +17,7 @@ export class PrismaEnderecoMapper {
         createdAt: raw.createdAt ? new Date(raw.createdAt) : undefined,
         numero: raw.numero,
       },
-      new UniqueEntityID(raw.fkPessoa),
+      new UniqueEntityID(raw.idEndereco),
     );
   }
 
