@@ -24,7 +24,7 @@ export abstract class PessoaRepository {
   }: {
     pagination: PaginationParams;
     order: OrderColumnParams;
-    filtro: {
+    filtro?: {
       nome?: string;
       cpfCnpj?: string;
     };

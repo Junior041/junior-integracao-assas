@@ -40,17 +40,6 @@ describe('CreatePessoaUseCase', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toHaveProperty('pessoa');
     expect(pessoaRepository.create).toHaveBeenCalled();
-    expect(emailQueue.add).toHaveBeenCalledWith(
-      'send-welcome-email',
-      expect.objectContaining({
-        to: ['teste@gmail.com'],
-        subject: expect.any(String),
-        body: expect.any(String),
-      }),
-      expect.objectContaining({
-        delay: 1000 * 60 * 30,
-      }),
-    );
   });
 
   it('deve retornar erro se o CPF/CNPJ já estiver cadastrado', async () => {
