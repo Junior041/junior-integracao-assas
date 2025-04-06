@@ -6,7 +6,7 @@ import { RouterModule } from '@nestjs/core';
 import { UsuarioHttpModule } from './http/usuario/pessoa-http.module';
 import { BankAccountHttpModule } from './http/bank-account/bank-account-http.module';
 import { BullModule } from '@nestjs/bull';
-import { EnderecoHttpModule } from './http/enderecos/endereco-http.modulo';
+import { EnderecoHttpModule } from './http/enderecos/endereco-http.module';
 import { AuthModule } from './http/auth/auth.module';
 import { GraficosHttpModule } from './http/graficos/graficos-httm.module';
 @Module({

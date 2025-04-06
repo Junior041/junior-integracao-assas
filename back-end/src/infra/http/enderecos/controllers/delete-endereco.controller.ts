@@ -26,7 +26,7 @@ const paramValidationPipe = new ZodValidationPipe(deleteEnderecoSchema);
 
 type DeleteEnderecoParams = z.infer<typeof deleteEnderecoSchema>;
 
-@Controller('endereco')
+@Controller()
 @ApiTags('Endereço')
 export class DeleteEnderecoController {
   constructor(private readonly deleteEndereco: DeleteEnderecoUseCase) {}

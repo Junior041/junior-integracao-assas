@@ -53,8 +53,6 @@ const salvarPessoa = async () => {
         console.error('Erro: ID da pessoa está indefinido!')
         return
       }
-      console.log(`/api/pessoa/${pessoaAtual.value.idPessoa}`);
-      
       await $fetch(`/api/pessoa/${pessoaAtual.value.idPessoa}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

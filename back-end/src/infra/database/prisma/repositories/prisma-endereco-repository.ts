@@ -7,6 +7,15 @@ import { PrismaEnderecoMapper } from '../mappers/primsa-endereco-mapper';
 @Injectable()
 export class PrismaEnderecoRepository implements EnderecoRepository {
   constructor(private prisma: PrismaService) {}
+  async save(idEndereco: string, data: Endereco): Promise<Endereco> {
+    const result = await this.prisma.endereco.update({
+      data: PrismaEnderecoMapper.toPersistence(data),
+      where: {
+        idEndereco,
+      },
+    });
+    return PrismaEnderecoMapper.toDomain(result);
+  }
   async create(data: Endereco): Promise<Endereco> {
     const result = await this.prisma.endereco.create({
       data: PrismaEnderecoMapper.toPersistence(data),

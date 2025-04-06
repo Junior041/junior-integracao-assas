@@ -46,6 +46,30 @@ export class Endereco extends Entity<EnderecoProps> {
   get createdAt() {
     return this.props.createdAt;
   }
+  set cep(cep) {
+    this.props.cep = cep;
+  }
+  set rua(rua) {
+    this.props.rua = rua;
+  }
+  set numero(numero) {
+    this.props.numero = numero;
+  }
+  set complemento(complemento) {
+    this.props.complemento = complemento;
+  }
+  set bairro(bairro) {
+    this.props.bairro = bairro;
+  }
+  set cidade(cidade) {
+    this.props.cidade = cidade;
+  }
+  set estado(estado) {
+    this.props.estado = estado;
+  }
+  set pais(pais) {
+    this.props.pais = pais;
+  }
   static create(
     props: Optional<EnderecoProps, 'createdAt'>,
     id?: UniqueEntityID,
