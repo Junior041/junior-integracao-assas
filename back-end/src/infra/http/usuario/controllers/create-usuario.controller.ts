@@ -5,7 +5,6 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiConflictResponse,
-  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateUsuarioUseCase } from '@/domain/application/cases/usuario/create-usuario-use-case';
 import { CreateUsuarioDto } from '../dto/create-usuario-dto';
@@ -25,7 +24,7 @@ const bodyValidationPipe = new ZodValidationPipe(createUsuarioSchema);
 type CreateUsuarioSchema = z.infer<typeof createUsuarioSchema>;
 
 @Controller()
-@ApiTags('Usuario')
+@ApiTags('Usuário')
 export class CreateUsuarioController {
   constructor(private createUsuario: CreateUsuarioUseCase) {}
 

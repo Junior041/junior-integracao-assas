@@ -23,7 +23,7 @@ const bodyValidationPipe = new ZodValidationPipe(loginSchema);
 type LoginSchema = z.infer<typeof loginSchema>;
 
 @Controller('auth')
-@ApiTags('Usuario')
+@ApiTags('Usuário')
 export class LoginController {
   constructor(private readonly loginUseCase: LoginUseCase) {}
 
