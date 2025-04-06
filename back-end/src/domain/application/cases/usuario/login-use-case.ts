@@ -36,8 +36,6 @@ export class LoginUseCase {
     if (!senhaValida) {
       return left(new CredenciaisInvalidasError());
     }
-    console.log(senhaValida);
-
     const accessToken = await this.encrypter.encrypt({
       sub: usuario.id.toString(),
     });

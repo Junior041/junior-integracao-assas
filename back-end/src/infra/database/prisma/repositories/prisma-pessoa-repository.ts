@@ -80,6 +80,10 @@ export class PrismaPessoaRepository implements PessoaRepository {
       where: {
         idPessoa,
       },
+      include: {
+        BankAccount: true,
+        Endereco: true,
+      },
     });
     if (!result) {
       return null;

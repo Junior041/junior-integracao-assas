@@ -12,10 +12,4 @@ export class CreateBankAccountDto {
     description: 'UUID da pessoa',
   })
   fkPessoa: string;
-
-  @ApiProperty({
-    example: '5f50c31f-2a99-4bb6-bf4c-555a9eccc58c',
-    description: 'UUID do usuário que criou',
-  })
-  fkUserCreate: string;
 }

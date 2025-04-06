@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data } = await axios.get<{ pessoas: Pessoa[] }>(
-      `${config.public.apiUrl}/pessoa/get-all?order=asc`,
+      `${config.public.apiUrl}/graficos/pessoas/por-idade`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,

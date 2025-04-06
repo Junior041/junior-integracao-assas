@@ -13,23 +13,9 @@ const menuOpen = ref(false)
       <!-- Menu Desktop -->
       <nav class="hidden md:flex gap-6">
         <NuxtLink class="hover:text-secondary transition" to="/">Home</NuxtLink>
-        <a href="#" class="hover:text-secondary transition">Usuarios</a>
-        <NuxtLink class="hover:text-secondary transition" to="/pessoas">Pessoas</NuxtLink>
+        <NuxtLink class="hover:text-secondary transition" to="/usuarios/list">Usuarios</NuxtLink>
+        <NuxtLink class="hover:text-secondary transition" to="/pessoa/list">Pessoas</NuxtLink>
       </nav>
-
-      <!-- Menu Mobile -->
-      <v-btn icon class="md:hidden" @click="menuOpen = !menuOpen">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-      <!--
-      <v-navigation-drawer v-model="menuOpen" temporary location="right">
-        <v-list>
-          <v-list-item link title="Início" />
-          <v-list-item link title="Sobre" />
-          <v-list-item link title="Contato" />
-        </v-list>
-      </v-navigation-drawer>
-      -->
-    </v-container>
+  </v-container>
   </header>
 </template>

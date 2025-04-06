@@ -2,12 +2,14 @@ import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 import { Endereco } from './endereco-entity';
+import { BankAccount } from './bank-account';
 
 export interface PessoaProps {
   nome: string;
   cpfCnpj: string;
   createdAt: Date;
   enderecos?: Endereco[];
+  bankAccounts?: BankAccount[];
 
   //parte da assas
   telefone: string;
@@ -41,6 +43,9 @@ export class Pessoa extends Entity<PessoaProps> {
   }
   get dataNascimento() {
     return this.props.dataNascimento;
+  }
+  get bankAccounts() {
+    return this.props.bankAccounts;
   }
   static create(
     props: Optional<PessoaProps, 'createdAt'>,
