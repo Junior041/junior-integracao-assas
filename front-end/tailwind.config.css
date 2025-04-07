@@ -1,29 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    theme: {
-      extend: {
-        colors: {
-          primary: {
-            DEFAULT: '#3b82f6', // Azul padrão
-            light: '#93c5fd', // Azul claro
-            dark: '#1e3a8a', // Azul escuro
-          },
-          secondary: {
-            DEFAULT: '#6366f1', // Roxo padrão
-            light: '#a5b4fc', // Roxo claro
-            dark: '#4338ca', // Roxo escuro
-          },
-          accent: {
-            DEFAULT: '#facc15', // Amarelo (exemplo para destaque)
-            light: '#fde047',
-            dark: '#ca8a04',
-          },
-          danger: '#ef4444',
-          success: '#22c55e',
-          warning: '#f59e0b',
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#E94E24', // Laranja principal
+          light: '#FF7043',   // Laranja claro (opcional)
+          dark: '#C63D1C',    // Laranja escuro (opcional)
         },
+        secondary: {
+          DEFAULT: '#6366f1',
+          light: '#a5b4fc',
+          dark: '#4338ca',
+        },
+        accent: {
+          DEFAULT: '#facc15',
+          light: '#fde047',
+          dark: '#ca8a04',
+        },
+        danger: '#ef4444',
+        success: '#22c55e',
+        warning: '#f59e0b',
       },
     },
-    plugins: [],
-  };
-  
+  },
+  plugins: [],
+};

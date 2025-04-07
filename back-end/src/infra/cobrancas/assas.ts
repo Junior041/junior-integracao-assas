@@ -18,7 +18,7 @@ export class Assas implements IntegracaoCobrancas {
 
   async createAccount(
     body: CreateAccountBody,
-  ): Promise<CreateAccountResponse | null> {
+  ): Promise<CreateAccountResponse | { errors: any[] } | null> {
     try {
       const response = await axios.post<CreateAccountResponse>(
         this.baseUrl,
@@ -44,10 +44,23 @@ export class Assas implements IntegracaoCobrancas {
       );
 
       return response.data;
-    } catch (error) {
-      console.log(error!['response']['data']);
+    } catch (error: any) {
+      console.error('Erro Assas:', error.response?.data);
 
-      return null;
+      // Se o erro contiver `errors`, retorne diretamente
+      if (error.response?.data?.errors) {
+        return { errors: error.response.data.errors };
+      }
+
+      // Senão, retorna o conteúdo genérico
+      return {
+        errors: [
+          {
+            code: 'unknown_error',
+            description: 'Erro desconhecido ao criar conta',
+          },
+        ],
+      };
     }
   }
 }

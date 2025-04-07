@@ -51,7 +51,6 @@ export class LoginController {
     if (result.isLeft()) {
       ExceptionsHandle.handle(result.value);
     }
-
     return result.value;
   }
 }

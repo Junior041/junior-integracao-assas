@@ -1,4 +1,4 @@
-import { defineEventHandler, parseCookies } from 'h3'
+import { defineEventHandler, getHeader } from 'h3'
 import axios from 'axios'
 
 interface Pessoa {
@@ -10,15 +10,23 @@ interface Pessoa {
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const cookies = parseCookies(event)
-  const authToken = cookies.auth_token
+  
+  // Pegando o token enviado no header Authorization
+  const authHeader = getHeader(event, 'authorization')
+
+  if (!authHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Não autorizado: token ausente',
+    })
+  }
 
   try {
     const { data } = await axios.get<{ pessoas: Pessoa[] }>(
       `${config.public.apiUrl}/graficos/pessoas/por-idade`,
       {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authHeader}`,
         },
       }
     )

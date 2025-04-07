@@ -5,7 +5,13 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { ResponsePessoaDto } from '../dto/response-pessoa-dto';
 import { FindPessoaByIdUseCase } from '@/domain/application/cases/pessoa/find-pessoa-by-id-use-case';
 import { PessoaPresenter } from '../presenters/pessoa-presenter';
@@ -24,6 +30,7 @@ export class FindPessoaByIdController {
     type: ResponsePessoaDto,
   })
   @ApiResponse({ status: 404, description: 'Pessoa não encontrada' })
+  @ApiBearerAuth()
   async findById(@Param('idPessoa') idPessoa: string) {
     const result = await this.findPessoaByIdUseCase.execute({ idPessoa });
 

@@ -24,5 +24,5 @@ export type CreateAccountResponse = {
 export abstract class IntegracaoCobrancas {
   abstract createAccount(
     body: CreateAccountBody,
-  ): Promise<CreateAccountResponse | null>;
+  ): Promise<CreateAccountResponse | { errors: any[] } | null>;
 }

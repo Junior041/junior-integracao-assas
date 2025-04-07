@@ -1,7 +1,7 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 definePageMeta({
@@ -20,12 +20,19 @@ interface Pessoa {
   telefone: string
   email: string
   dataNascimento: string
+  bankAccount?: ContaBancaria[]
+  enderecos?: any[]
 }
 
 interface ContaBancaria {
-  id: string
-  bank: string
-  incomeValue: number
+  idBankAccount: string,
+  idAccount: string,
+  bank: string,
+  fkPessoa: string,
+  incomeValue: number,
+  agency: string,
+  account: string,
+  accountDigit: string,
 }
 
 const pessoa = ref<Pessoa | null>(null)
@@ -44,20 +51,7 @@ const novaConta = ref({
   incomeValue: 0
 })
 
-onMounted(() => {
-  token.value = localStorage.getItem('auth_token')
-  buscarPessoa()
-})
-
-const mostrarErro = (msg: string) => {
-  erroMensagem.value = msg
-  showErroSnackbar.value = true
-}
-const mostrarSucesso = (msg: string) => {
-  sucessoMensagem.value = msg
-  showSucessoSnackbar.value = true
-}
-const enderecos = ref<any | null>(null)
+const enderecos = ref<any[] | null>(null)
 const showModalEndereco = ref(false)
 
 const novoEndereco = ref({
@@ -72,9 +66,22 @@ const novoEndereco = ref({
   pais: ''
 })
 
+onMounted(() => {
+  token.value = localStorage.getItem('auth_token')
+  buscarPessoa()
+})
 
-const abrirModalEndereco = (endereco: any) => {
-  novoEndereco.value = { ...endereco } // faz cópia para edição
+const mostrarErro = (msg: string) => {
+  erroMensagem.value = msg
+  showErroSnackbar.value = true
+}
+const mostrarSucesso = (msg: string) => {
+  sucessoMensagem.value = msg
+  showSucessoSnackbar.value = true
+}
+
+const abrirModalEndereco = (endereco: any = novoEndereco.value) => {
+  novoEndereco.value = { ...endereco }
   showModalEndereco.value = true
 }
 
@@ -86,7 +93,7 @@ const salvarEndereco = async () => {
 
   try {
     await $fetch(`/api/endereco`, {
-      method: enderecos.value ? 'PUT' : 'POST',
+      method: enderecos.value?.length ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.value}`
@@ -99,7 +106,6 @@ const salvarEndereco = async () => {
     mostrarErro('Erro ao salvar endereço.')
   }
 }
-
 
 const buscarPessoa = async () => {
   try {
@@ -114,8 +120,9 @@ const buscarPessoa = async () => {
     }
 
     pessoa.value = dados
-    enderecos.value = dados.enderecos
-    contaBancaria.value = dados.bankAccounts
+    enderecos.value = dados.enderecos || []
+    contaBancaria.value = dados.bankAccount?.[0] || null
+
   } catch (_: any) {
     mostrarErro('Erro ao carregar dados da pessoa.')
   }
@@ -172,13 +179,14 @@ const tornarUsuario = async () => {
     })
     showModalUsuario.value = false
     senhaUsuario.value = ''
+    mostrarSucesso('Usuário criado com sucesso.')
   } catch (_: any) {
     mostrarErro('Erro ao tornar pessoa um usuário.')
   }
 }
 
 const abrirModalConta = () => {
-  novaConta.value.bank = ''
+  novaConta.value.bank = 'ASSAS'
   novaConta.value.incomeValue = 0
   showModalConta.value = true
 }
@@ -190,23 +198,33 @@ const criarConta = async () => {
   }
 
   try {
-    await $fetch('/api/endereco', {
+    await $fetch('http://localhost:3333/bank-acocunt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.value}`
       },
-      body: JSON.stringify({
+      body: {
         bank: novaConta.value.bank,
         incomeValue: novaConta.value.incomeValue,
         fkPessoa: idPessoa,
-      })
+      }
     })
 
     showModalConta.value = false
     novaConta.value = { bank: '', incomeValue: 0 }
-  } catch (_: any) {
-    mostrarErro('Erro ao criar conta bancária.')
+    buscarPessoa()
+    mostrarSucesso('Conta bancária criada com sucesso.')
+  } catch (error: any) {
+    let msgErro = 'Erro ao criar conta bancária.'
+
+    if (error?.data?.message) {
+      msgErro = error.data.message
+    } else if (error?.data?.errors?.length) {
+      msgErro = error.data.errors.map((e: any) => e.description).join('; ')
+    }
+
+    mostrarErro(msgErro)
   }
 }
 
@@ -232,7 +250,6 @@ const buscarPorCep = async () => {
   }
 }
 
-
 const rendaFormatada = computed({
   get() {
     if (!novaConta.value.incomeValue) return ''
@@ -246,10 +263,10 @@ const rendaFormatada = computed({
     novaConta.value.incomeValue = Number(somenteNumeros) / 100
   }
 })
-
 </script>
+
 <template>
-  <v-container>
+  <v-container class="py-6">
     <!-- Snackbar de erro -->
     <v-snackbar v-model="showErroSnackbar" :timeout="5000" color="red" top right>
       {{ erroMensagem }}
@@ -257,22 +274,36 @@ const rendaFormatada = computed({
     <v-snackbar v-model="showSucessoSnackbar" :timeout="5000" color="green" top right>
       {{ sucessoMensagem }}
     </v-snackbar>
-    
+
     <!-- Seção Conta Bancária -->
-    <v-card class="mx-auto pa-4 my-6" max-width="600px" elevation="2">
-      <v-card-title class="text-h6 font-weight-bold">Conta Bancária</v-card-title>
+    <v-card class="mx-auto pa-6 mt-8" max-width="700" elevation="3">
+      <v-card-title class="text-h6 font-weight-bold d-flex align-center">
+        <v-icon class="mr-2">mdi-bank</v-icon> Conta Bancária
+      </v-card-title>
+      <v-divider class="my-4" />
       <v-card-text v-if="contaBancaria">
-        <p><strong>Banco:</strong> {{ contaBancaria.bank }}</p>
-        <p><strong>Renda Mensal:</strong> R$ {{ contaBancaria.incomeValue.toFixed(2) }}</p>
+        <p><strong>Banco: </strong>{{ contaBancaria.bank }}</p>
+        <p><strong>Renda Mensal: </strong>{{ new Intl.NumberFormat("pt-BR", {
+          style: "currency", currency: "BRL"
+        }).format(
+          contaBancaria.incomeValue,
+          ) }}</p>
+        <p><strong>Identificador: </strong>{{ contaBancaria.idAccount }}</p>
+        <p><strong>Agência: </strong>{{ contaBancaria.agency }}</p>
+        <p><strong>Conta: </strong>{{ contaBancaria.account }}</p>
+        <p><strong>Dígito da conta: </strong>{{ contaBancaria.accountDigit }}</p>
       </v-card-text>
       <v-card-text v-else>
-        <v-btn color="primary" @click="abrirModalConta">Criar Conta Bancária</v-btn>
+        <v-btn color="primary" variant="tonal" @click="abrirModalConta">Criar Conta Bancária</v-btn>
       </v-card-text>
     </v-card>
 
     <!-- Seção Editar Pessoa -->
-    <v-card class="mx-auto pa-4 my-6" max-width="600px" elevation="2">
-      <v-card-title class="text-h6 font-weight-bold">Editar Pessoa</v-card-title>
+    <v-card class="mx-auto pa-6 mt-8" max-width="700" elevation="3">
+      <v-card-title class="text-h6 font-weight-bold d-flex align-center">
+        <v-icon class="mr-2">mdi-account</v-icon> Editar Pessoa
+      </v-card-title>
+      <v-divider class="my-4" />
       <v-card-text v-if="pessoa">
         <v-text-field v-model="pessoa.nome" label="Nome" required />
         <v-text-field v-model="pessoa.cpfCnpj" label="CPF/CNPJ" required />
@@ -282,32 +313,40 @@ const rendaFormatada = computed({
       </v-card-text>
 
       <v-card-actions>
-        <v-row justify="space-between" class="w-100">
-          <div>
-            <v-btn color="blue" class="mr-2" variant="elevated" @click="showModalUsuario = true">Tornar Usuário</v-btn>
-            <v-btn color="green" variant="elevated" @click="salvar">Salvar</v-btn>
-          </div>
+        <v-row class="w-100" justify="space-between">
+          <v-col cols="auto">
+            <v-btn color="indigo" variant="tonal" @click="showModalUsuario = true">
+              <v-icon start>mdi-account-plus</v-icon> Tornar Usuário
+            </v-btn>
+          </v-col>
+          <v-col cols="auto">
+            <v-btn color="green" variant="elevated" @click="salvar">
+              <v-icon start>mdi-content-save</v-icon> Salvar
+            </v-btn>
+          </v-col>
         </v-row>
       </v-card-actions>
     </v-card>
 
     <!-- Seção Endereço -->
-    <v-card class="mx-auto pa-4 my-6" max-width="600px" elevation="2">
-      <v-card-title class="text-h6 font-weight-bold">Endereço</v-card-title>
+    <v-card class="mx-auto pa-6 mt-8" max-width="700" elevation="3">
+      <v-card-title class="text-h6 font-weight-bold d-flex align-center">
+        <v-icon class="mr-2">mdi-home-map-marker</v-icon> Endereço
+      </v-card-title>
+      <v-divider class="my-4" />
       <v-card-text v-if="enderecos && enderecos.length">
-        <div v-for="(endereco, index) in enderecos" :key="index" class="mb-4">
+        <div v-for="(endereco, index) in enderecos" :key="index" class="mb-6 pa-4 rounded border">
           <p><strong>CEP:</strong> {{ endereco.cep }}</p>
           <p><strong>Rua:</strong> {{ endereco.rua }}, {{ endereco.numero }}</p>
           <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
           <p><strong>Cidade:</strong> {{ endereco.cidade }} - {{ endereco.estado }}</p>
           <p><strong>País:</strong> {{ endereco.pais }}</p>
           <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
-          <p><strong>Número:</strong> {{ endereco.numero }}</p>
-          <v-btn color="primary" @click="abrirModalEndereco(endereco)">Editar Endereço</v-btn>
+          <v-btn color="primary" variant="tonal" @click="abrirModalEndereco(endereco)">Editar Endereço</v-btn>
         </div>
       </v-card-text>
       <v-card-text v-else>
-        <v-btn color="primary" @click="abrirModalEndereco">Cadastrar Endereço</v-btn>
+        <v-btn color="primary" variant="tonal" @click="abrirModalEndereco()">Cadastrar Endereço</v-btn>
       </v-card-text>
     </v-card>
 
@@ -331,7 +370,7 @@ const rendaFormatada = computed({
       <v-card>
         <v-card-title class="text-h6 font-weight-bold">Criar Conta Bancária</v-card-title>
         <v-card-text>
-          <v-text-field v-model="novaConta.bank" label="Banco" placeholder="ASSAS" />
+          <v-text-field v-model="novaConta.bank" label="Banco" readonly />
           <v-text-field v-model="rendaFormatada" label="Renda Mensal" />
         </v-card-text>
         <v-card-actions>
@@ -345,7 +384,8 @@ const rendaFormatada = computed({
     <!-- Modal Endereço -->
     <v-dialog v-model="showModalEndereco" max-width="500px">
       <v-card>
-        <v-card-title class="text-h6 font-weight-bold">{{ enderecos ? 'Editar' : 'Cadastrar' }} Endereço</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold">{{ enderecos?.length ? 'Editar' : 'Cadastrar' }}
+          Endereço</v-card-title>
         <v-card-text>
           <v-text-field v-model="novoEndereco.cep" label="CEP" @blur="buscarPorCep" />
           <v-text-field v-model="novoEndereco.rua" label="Rua" />

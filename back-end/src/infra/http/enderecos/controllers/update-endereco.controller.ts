@@ -47,8 +47,6 @@ export class UpdateEnderecoController {
     @Body(bodyValidationPipe)
     body: UpdateEnderecoSchema,
   ) {
-    console.log(body);
-
     const result = await this.updateEndereco.execute(body);
 
     if (result.isLeft()) {
