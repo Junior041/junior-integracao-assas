@@ -11,7 +11,6 @@ import {
 
 export class ExceptionsHandle {
   public static handle(error: UseCaseError) {
-    console.log(error);
     switch (error.constructor) {
       case JaCadastradroErro:
         throw new ConflictException(error.message);

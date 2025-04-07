@@ -82,8 +82,14 @@ export class CreateBankAccountUseCase {
       postalCode: endereco.cep,
       province: endereco.bairro,
     });
-
     if (retornoApi !== null) {
+      if ('errors' in retornoApi) {
+        const mensagemErro = retornoApi.errors
+          .map((e) => e.description)
+          .join('; ');
+        return left(new GenericoErro(`Erro na integração: ${mensagemErro}`));
+      }
+
       const bankAccount = await this.bankAccountRepository.create(
         BankAccount.create({
           account: retornoApi.accountNumber.account,
@@ -96,11 +102,8 @@ export class CreateBankAccountUseCase {
           incomeValue,
         }),
       );
-      return right({
-        bankAccount,
-      });
-    } else {
-      return left(new GenericoErro('Erro ao integrar com banco'));
+      return right({ bankAccount });
     }
+    return left(new GenericoErro('Erro ao criar conta ASSAS'));
   }
 }

@@ -13,7 +13,7 @@ export class PrismaUsuarioMapper {
         createdAt: raw.createdAt ? new Date(raw.createdAt) : undefined,
         updatedAt: raw.createdAt ? new Date(raw.createdAt) : undefined,
       },
-      new UniqueEntityID(raw.fkPessoa),
+      new UniqueEntityID(raw.idUsuario),
     );
   }
 

@@ -10,6 +10,8 @@ import { DeletePessoaController } from './controllers/delete-pessoa.controller';
 import { DeletePessoaUseCase } from '@/domain/application/cases/pessoa/delete-pessoa-use-case';
 import { MailModule } from '@/infra/mail/mail.module';
 import { EnvModule } from '@/infra/env/env.module';
+import { FindPessoaByIdController } from './controllers/find-pessoa-by-id.controller';
+import { FindPessoaByIdUseCase } from '@/domain/application/cases/pessoa/find-pessoa-by-id-use-case';
 
 @Module({
   imports: [DatabaseModule, MailModule, EnvModule],
@@ -18,12 +20,14 @@ import { EnvModule } from '@/infra/env/env.module';
     GetPessoaController,
     UpdatePessoaController,
     DeletePessoaController,
+    FindPessoaByIdController,
   ],
   providers: [
     CreatePessoaUseCase,
     GetPessoaUseCase,
     UpdatePessoaUseCase,
     DeletePessoaUseCase,
+    FindPessoaByIdUseCase,
   ],
 })
 export class PessoaHttpModule {}

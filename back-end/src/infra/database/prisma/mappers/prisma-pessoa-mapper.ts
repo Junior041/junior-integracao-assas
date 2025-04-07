@@ -2,10 +2,12 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Pessoa as PessoaDomain } from '@/domain/enterprise/entities/pessoa-entity';
 import { Prisma } from '@prisma/client';
 import { PrismaEnderecoMapper } from './primsa-endereco-mapper';
+import { PrismaBankAccountMapper } from './prisma-bank-account-mapper';
 
 type PessoaUncheckedCreateInputWithRelations =
   Prisma.PessoaUncheckedCreateInput & {
     Endereco?: Prisma.EnderecoUncheckedCreateInput[] | null;
+    BankAccount?: Prisma.BankAccountUncheckedCreateInput[] | null;
   };
 
 export class PrismaPessoaMapper {
@@ -20,6 +22,9 @@ export class PrismaPessoaMapper {
         telefone: raw.telefone,
         enderecos: raw.Endereco
           ? raw.Endereco.map(PrismaEnderecoMapper.toDomain)
+          : undefined,
+        bankAccounts: raw.BankAccount
+          ? raw.BankAccount.map(PrismaBankAccountMapper.toDomain)
           : undefined,
       },
       new UniqueEntityID(raw.idPessoa),

@@ -51,7 +51,7 @@ export class UpdateEnderecoUseCase {
     endereco.cidade = data.cidade;
     endereco.estado = data.estado;
     endereco.pais = data.pais;
-
+    await this.enderecoRepository.save(data.idEndereco, endereco);
     return right({
       endereco,
     });

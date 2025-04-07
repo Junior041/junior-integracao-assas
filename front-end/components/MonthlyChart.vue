@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Chart, registerables } from 'chart.js'
-import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 Chart.register(...registerables)
 
 defineProps<{
@@ -15,23 +15,37 @@ const chartOptions = {
       display: false,
     },
     title: {
-      display: false,
+      display: true,
+      text: 'Total por Mês',
+      font: {
+        size: 18,
+      },
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      ticks: {
+        stepSize: 1,
+      },
     },
   },
 }
 </script>
 
 <template>
-  <Bar
+  <Line
     :options="chartOptions"
     :data="{
       labels,
       datasets: [
         {
-          label: 'Total de Pessoas',
-          backgroundColor: '#3B82F6',
-          borderRadius: 6,
+          label: 'Total',
+          borderColor: '#4F46E5',
+          backgroundColor: '#6366F1',
           data,
+          tension: 0.3,
+          fill: true,
         },
       ],
     }"

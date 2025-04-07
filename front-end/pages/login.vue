@@ -21,12 +21,7 @@ const login = async () => {
     const token = response?.accessToken
     
     if (token) {
-      const authCookie = useCookie('auth_token', {
-        maxAge: 60 * 60,
-        sameSite: 'none',
-        secure: true 
-      })
-      authCookie.value = token
+      localStorage.setItem('auth_token', token)
       router.push('/')
     } else {
       errorMessage.value = 'Login falhou, tente novamente.'

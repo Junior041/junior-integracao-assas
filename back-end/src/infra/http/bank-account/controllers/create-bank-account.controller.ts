@@ -13,18 +13,19 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateBankAccountDto } from '../dto/create-bank-account-dto';
+import { UserPayload } from '../../auth/jwt.strategy';
+import { CurrentUser } from '../../auth/current-user-decorator';
 
 const createBankAccountSchema = z.object({
   bank: z.enum(['ASSAS']),
   incomeValue: z.number(),
   fkPessoa: z.string().uuid(),
-  fkUserCreate: z.string().uuid(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createBankAccountSchema);
 type CreateBankAccountSchema = z.infer<typeof createBankAccountSchema>;
 
-@Controller('/bank-account')
+@Controller()
 @ApiTags('Bank Account')
 export class CreateBankAccountController {
   constructor(private createBankAccount: CreateBankAccountUseCase) {}
@@ -37,8 +38,14 @@ export class CreateBankAccountController {
   @ApiConflictResponse({ description: 'Conta bancária já cadastrada.' })
   @HttpCode(HttpStatus.CREATED)
   @ApiBearerAuth()
-  async handle(@Body(bodyValidationPipe) body: CreateBankAccountSchema) {
-    const result = await this.createBankAccount.execute(body);
+  async handle(
+    @Body(bodyValidationPipe) body: CreateBankAccountSchema,
+    @CurrentUser() { sub }: UserPayload,
+  ) {
+    const result = await this.createBankAccount.execute({
+      ...body,
+      fkUserCreate: sub,
+    });
 
     if (result.isLeft()) {
       ExceptionsHandle.handle(result.value);
