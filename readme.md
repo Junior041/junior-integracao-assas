@@ -32,10 +32,21 @@ Este projeto é composto por:
 
 
 ## Considerações
-Deixei previamente cadastrado um usuario (login: joao@email.com, senha: imobia).
-Enviei meu .env por email para nao ter que criar novamente as keys.
-Email: Eu criei um meu somente para essa aplicação, 1 semana depois vou apagar.
-Vue: Tive problemas para usar o Nuxt, em algumas requisições eu consegui, outras não. Não consegui descobrir o porque, talvez algo de diretorio.
-Ultilizei o reddis e o bull o envio de email depois de 30 minutos da criação do cliente(que chamei de pessoa na aplicação), para mudar o tempo, tem a propriedade no .env.
-Documentação dos endpoints: http://localhost:3333/api#/ ou http://localhost:3333/api-json(se quiser exportar para o postman/insomnia)
+
+- Deixei previamente cadastrado um usuário para testes:  
+  **Login:** `joao@email.com`  
+  **Senha:** `imobia`
+
+- Enviei o arquivo `.env` por e-mail para evitar a necessidade de recriar as chaves.
+
+- **E-mail:** Criei uma conta de e-mail específica apenas para essa aplicação. Pretendo apagá-la uma semana após a entrega.
+
+- **Vue/Nuxt:** Tive dificuldades ao usar o Nuxt. Algumas requisições funcionaram corretamente, outras não. Não consegui identificar o motivo, mas pode estar relacionado à estrutura de diretórios.
+
+- **Envio de e-mail:** Utilizei Redis e Bull para agendar o envio de e-mails 30 minutos após a criação de um cliente (chamado de "pessoa" na aplicação). Esse tempo pode ser configurado pela variável no `.env`.
+
+- **Documentação dos endpoints:**  
+  - Visualização via Swagger: [http://localhost:3333/api#/](http://localhost:3333/api#/)  
+  - JSON da API (para importar no Postman/Insomnia): [http://localhost:3333/api-json](http://localhost:3333/api-json)
+
 
