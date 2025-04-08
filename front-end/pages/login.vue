@@ -10,7 +10,7 @@ const config = useRuntimeConfig()
 
 const login = async () => {
   try {
-    const response = await $fetch(`${config.public.apiUrl}/api/usuario/auth/login`, {
+    const response = await $fetch(`${config.public.apiUrl}/usuario/auth/login`, {
       method: 'POST',
       body: {
         email: email.value,
